@@ -24,6 +24,15 @@ function NavBar({setUser,user}){
       <li className="nav-item">
         <a className="nav-link " href="#">Create Event</a>
       </li>
+      {user ? (
+            <Link to={`/account`}>
+            <li className="nav-item active">
+              <a className="nav-link" href="#">Account
+                 </a>
+            </li>
+            </Link>
+
+      ):(null)}
       { user ? (
         <Button variant="outline" onClick={handleLogoutClick}>
           Logout

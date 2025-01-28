@@ -2,6 +2,7 @@ import EventCard from "./Eventcard"
 
 
 function Event({eventData}){
+    
     return(
         <div>
             <h1 style={{textAlign:'center'}}>Events:</h1>

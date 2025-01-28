@@ -70,6 +70,7 @@ class UserEvent(db.Model,SerializerMixin):
     serialize_rules = ('-user.user_events','-event.user_events')
     id = db.Column(db.Integer, primary_key = True)
     rating = db.Column(db.String)
+    role = db.Column(db.String)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))

@@ -65,10 +65,12 @@ if __name__ == '__main__':
 
         print("creating user events....")
         user_events = []
-        for i in range(10):
+        roles = ['Attendee','Organizer']
+        for i in range(30):
 
             new_user_event = UserEvent(
-                rating = str(randint(1,5)),            
+                rating = str(randint(1,5)),    
+                role = rc(roles)        
             )
 
             new_user_event.user = rc(users)

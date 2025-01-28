@@ -9,6 +9,8 @@ function EventPage(){
   const navigate = useNavigate();
 
   let [onLogin,user] = useOutletContext();
+  const[attending, setAttending] = useState(false)
+
   if(!user){
       navigate('/login')
   }
@@ -20,7 +22,7 @@ function EventPage(){
       });
       const { id } = useParams();
     
-      function getComments(){
+      function getEvent(){
         fetch(`/events/${id}`).then((r) => {
           if (r.ok) {
             r.json().then((event) =>
@@ -32,8 +34,25 @@ function EventPage(){
             );
           }
         })
+        
       }
-      useEffect(getComments, [id]);
+      useEffect(getEvent, [id]);
+
+
+      function attendEvent(){
+        fetch('/user_events',{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ event_id: id,
+                                  user_id:user.id,
+                                  role:'Atendee'
+          }),
+        })
+        .then(getEvent)
+        .then(setAttending(true))
+      }
 
       if (status === "pending") return <h1>Loading...</h1>;
       if (status === "rejected") return <h1>Error: {error.error}</h1>;
@@ -44,12 +63,14 @@ function EventPage(){
         <h2>Location:{event.location}</h2>
         <h3>Time:{event.time}</h3>
         <h4>Atendees:{event.user_events.length}</h4>
-        <button>Attend</button>
+        {attending ? (null):(
+          <button  className='EventCardButton' onClick={attendEvent}>Attend</button>
+        )}
         </div>
         <main>
         
         <MessageList message={event.comments}/>
-        <NewMessage eventid = {event.id} getComments ={getComments}/>
+        <NewMessage eventid = {event.id} getEvent ={getEvent}/>
         </main>
         </>
     )

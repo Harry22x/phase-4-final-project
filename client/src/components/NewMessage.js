@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useOutletContext,Navigate,useNavigate } from "react-router-dom";
-function NewMessage({ currentUser, getComments,eventid }) {
+function NewMessage({ currentUser, getEvent,eventid }) {
   const [body, setBody] = useState("");
 
 
@@ -22,7 +22,7 @@ function NewMessage({ currentUser, getComments,eventid }) {
     })
       .then((r) => r.json())
       .then((newMessage) => {
-        getComments();
+        getEvent();
         setBody("");
       });
   }

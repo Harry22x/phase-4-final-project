@@ -92,7 +92,7 @@ class CheckSession(Resource):
         if  user_id:
             user = User.query.filter_by(id=user_id).first()              
      
-            print(user)
+            return user.to_dict(),200
             
         
         else:
@@ -142,6 +142,15 @@ class Comments(Resource):
         db.session.add(new_comment)
         db.session.commit()
         return make_response(new_comment.to_dict(),201)
+    
+class UserEvents(Resource):
+    def post(self):
+        data = request.get_json()
+
+        new_user_event = UserEvent(user_id = data['user_id'], event_id = data['event_id'], role = data['role'])
+        db.session.add(new_user_event)
+        db.session.commit()
+        return make_response(new_user_event.to_dict(),201)
 
 
 
@@ -152,6 +161,7 @@ api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Comments, '/comments')
+api.add_resource(UserEvents, '/user_events')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
