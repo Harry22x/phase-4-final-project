@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
             new_event = Event(
                 name = event,
-                time = fake.time(pattern="%H:%M"),
+                time = fake.date_between('now','2025-03-13') + fake.time(pattern="%H:%M"),
                 location = fake.address()
             )
             events.append(new_event)
@@ -83,8 +83,9 @@ if __name__ == '__main__':
         for i in range(10):
             comment = Comment(
                 body = fake.paragraph(),
-                username = rc(users.username)
+                username = rc(usernames)
             )
+            comment.event = rc(events)
             comments.append(comment)
         db.session.add_all(comments)
 

@@ -3,12 +3,13 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request
+from flask import request,make_response, session
 from flask_restful import Resource
 
 # Local imports
 from config import app, db, api
 # Add your model imports
+from models import User, Event, UserEvent, Comment
 
 
 # Views go here!
@@ -17,6 +18,136 @@ from config import app, db, api
 def index():
     return '<h1>Project Server</h1>'
 
+class Events(Resource):
+    def get(self):
+        events = [{
+            'id': event.id,
+            'name': event.name,
+            'location':event.location
+        } for event in Event.query.all()]
+        return make_response(events,200)
+
+class EventByID(Resource):
+    def get(self,id):
+        event = Event.query.get_or_404(id)
+        return make_response(event.to_dict(),200)
+
+
+
+class Signup(Resource):
+    pass
+    def post(self):
+        data = request.get_json()
+        
+        
+        errors = {}
+        
+       
+        if not data.get('username'):
+            errors['username'] = 'Username is required'
+        
+        
+        if not data.get('password'):
+            errors['password'] = 'Password is required'
+        elif len(data['password']) < 6:
+            errors['password'] = 'Password must be at least 6 characters'
+        
+       
+        if errors:
+            return {'errors': errors}, 422
+        
+        try:
+            new_user = User(
+                username=data['username'],
+                
+            )
+           
+            new_user.password_hash = data['password']
+            
+           
+            db.session.add(new_user)
+            db.session.commit()
+        except ValueError as e:
+            
+            return {'errors': {'username': str(e)}}, 422
+        except Exception as e:
+            db.session.rollback()
+            return {'errors': {'database': 'Error saving user'}}, 422
+        
+      
+        session['user_id'] = new_user.id
+        
+       
+        return new_user.to_dict(), 201
+
+class CheckSession(Resource):
+    pass
+    def get(self):
+      
+        user_id = session.get('user_id')
+        
+        if not user_id:
+            return {'error': 'Unauthorized'}, 401
+        
+       
+        user = User.query.filter_by(id=user_id).first()
+              
+     
+        return user.to_dict(), 200
+class Login(Resource):
+    def post(self):
+        data = request.get_json()
+        
+       
+        user = User.query.filter_by(username=data.get('username')).first()
+        
+      
+        if user and user.authenticate(data.get('password', '')):
+            
+            session['user_id'] = user.id
+            
+           
+            return user.to_dict(), 200
+        
+       
+        return {'error': 'Invalid username or password'}, 401
+
+class Logout(Resource):
+    pass
+    def delete(self):
+       
+        if not session['user_id'] :
+            return {'error': 'Unauthorized'}, 401
+        
+       
+        session.pop('user_id', None)
+        
+       
+        return '', 204
+
+
+class Comments(Resource):
+    def post(self):
+        data = request.get_json()
+
+        new_comment= Comment(
+            body = data['body'],
+            username = data['username'],
+            event_id = data['event_id']
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        return make_response(new_comment.to_dict(),201)
+
+
+
+api.add_resource(Events,'/events')
+api.add_resource(EventByID,'/events/<int:id>')
+api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(Logout, '/logout', endpoint='logout')
+api.add_resource(Comments, '/comments')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -6,17 +6,15 @@ from sqlalchemy_serializer import SerializerMixin
 from config import db, bcrypt
 from sqlalchemy.ext.hybrid import hybrid_property
 
-metadata = MetaData(
-    naming_convention={
-        "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    }
-)
+
 
 
 # Models go here!
 
-class User(db.model,SerializerMixin):
+class User(db.Model,SerializerMixin):
     __tablename__ = 'users'
+
+    serialize_rules = ('-user_events.user','_password_hash')
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String, unique = True, nullable = False)
     _password_hash = db.Column(db.String, nullable = True) 
@@ -38,15 +36,25 @@ class User(db.model,SerializerMixin):
     def authenticate(self,password):
         return bcrypt.check_password_hash(self._password_hash,password.encode('utf-8'))
 
+    @validates('username')
+    def validate_user_name(self, key, user_name):
+        existing_user_names = [user.username for user in User.query.all()]  
+        if user_name in existing_user_names:
+            raise ValueError(f"Username '{user_name}' already exists.")
+        elif user_name == "":
+            raise ValueError("Username cannot be empty.")
+        return user_name
 
 
-class Event(db.model,SerializerMixin):
+class Event(db.Model,SerializerMixin):
     __tablename__ = 'events'
+
+    serialize_rules = ('-user_events.event','-comments.event')
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
     time = db.Column(db.String)
-    location = db.column(db.String)
+    location = db.Column(db.String)
     user_events = db.relationship(
         'UserEvent', back_populates = 'event', cascade = 'all, delete-orphan'
     )
@@ -56,9 +64,10 @@ class Event(db.model,SerializerMixin):
     )
 
 
-class UserEvent(db.model,SerializerMixin):
+class UserEvent(db.Model,SerializerMixin):
     __tablename__ = 'user_events'
 
+    serialize_rules = ('-user.user_events','-event.user_events')
     id = db.Column(db.Integer, primary_key = True)
     rating = db.Column(db.String)
 
@@ -66,16 +75,17 @@ class UserEvent(db.model,SerializerMixin):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     user = db.relationship(
-        'User', back_populates = 'user_events' , cascade = 'all, delete-orphan'
+        'User', back_populates = 'user_events' 
     )
     event = db.relationship(
-        'Event', back_populates = 'user_events', cascade = 'all, delete-orphan'
+        'Event', back_populates = 'user_events'
     )
 
 
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
 
+    serialize_rules= ('-events.comments',)
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String)
     username = db.Column(db.String)
@@ -84,5 +94,5 @@ class Comment(db.Model, SerializerMixin):
 
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     event = db.relationship(
-        'Event', back_populates = 'comments', cascade = 'all, delete-orphan'
+        'Event', back_populates = 'comments'
     )

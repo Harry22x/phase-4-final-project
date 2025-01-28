@@ -1,19 +1,42 @@
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { Button } from "../styles";
 
-
-function NavBar(){
-
+function NavBar({setUser,user}){
+  function handleLogoutClick() {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        setUser(null);
+      }
+    });
+  }
     return(<>
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+  <div className="collapse navbar-collapse" id="navbarText">
+    <ul className="navbar-nav mr-auto">
+    <Link to={`/`}>
+      <li className="nav-item active">
+        <a className="nav-link" href="#">Home
+           {/* <span className="sr-only">(current)</span> */}
+           </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link " href="#">Create Event</a>
+      </Link>
+      <li className="nav-item">
+        <a className="nav-link " href="#">Create Event</a>
       </li>
+      { user ? (
+        <Button variant="outline" onClick={handleLogoutClick}>
+          Logout
+        </Button>):
+        (<Link to ={`/login`}>
+      <li className="nav-item">
+        <a className="nav-link " href="#">Login</a>
+      </li>
+      </Link>)
+      }
+      
     </ul>
-    <span className="navbar-brand nav-link">Login</span>
+  
   </div>
     </nav>
     </>)
