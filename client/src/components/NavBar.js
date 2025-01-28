@@ -11,7 +11,7 @@ function NavBar({setUser,user}){
     });
   }
     return(<>
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
   <div className="collapse navbar-collapse" id="navbarText">
     <ul className="navbar-nav mr-auto">
     <Link to={`/`}>

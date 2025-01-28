@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Button } from "../styles";
 import SignUpForm from "../components/SignUpForm";
-import { Link, useOutletContext,Navigate,useNavigate } from "react-router-dom";
+import {  useOutletContext,useNavigate } from "react-router-dom";
 
 function Login(){
     const [showLogin, setShowLogin] = useState(true)

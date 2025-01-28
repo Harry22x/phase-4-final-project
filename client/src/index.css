@@ -3,6 +3,14 @@
   --header: #fff;
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
+  
+}
+body{
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+  background-color: var(--bg);
 }
 
 main {
@@ -12,10 +20,10 @@ main {
   margin: 100px auto;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto 1fr auto;
-  color: var(--main-font-color);
-  background-color: var(--bg-color-1);
+  color: white;
+  background-color: rgb(24, 24, 36);
   transition: all 0.5s;
-  box-shadow: 5px 5px 15px -6px #8c8c8c;
+  
 }
 
 li {
@@ -26,9 +34,9 @@ li {
 }
 
 li:hover {
-  border-top: 1px solid var(--bg-color-3);
-  border-bottom: 1px solid var(--bg-color-3);
-  background-color: var(--bg-color-2);
+  border-top: 1px solid rgba(75, 75, 75);
+  border-bottom: 1px solid rgba(75, 75, 75);
+  background-color: rgba(50, 50, 50);
 }
 
 li span.user {
@@ -73,3 +81,63 @@ li:hover .actions {
   display: block;
 }
 
+.list {
+  overflow-y:auto;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+  justify-content: flex-end;
+}
+.messageul {
+  list-style: none;
+  overflow-y: scroll;
+  padding-top: 2rem;
+  
+}
+
+form.new-message {
+  display: flex;
+}
+
+form.new-message input[type="text"] {
+  flex: 1 1 auto;
+}
+
+form.new-message input[type="text"]:focus {
+  padding: 1rem;
+}
+
+form.new-message input[type="submit"] {
+  opacity: 0.8;
+}
+
+form.new-message input[type="submit"]:focus {
+  outline: none;
+  opacity: 1;
+}
+
+.new-message button{
+  border: none;
+    font-size: 1rem;
+    width: 100px;
+    padding: 0.25rem;
+    background-color: rgb(91, 13, 232, 1);
+    color: rgb(255, 255, 255);
+}
+
+.new-message input{
+  padding: 0.25rem;
+  border: none;
+  border-bottom: 1px solid var(--alt-font-color);
+  color:white;
+  background-color: #212529;
+}
+
+.EventCardButton{
+  border: none;
+  font-size: 1rem;
+  
+  padding: 0.25rem;
+  background-color: rgb(91, 13, 232, 1);
+  color: rgb(255, 255, 255);
+}

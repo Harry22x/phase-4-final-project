@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
             new_event = Event(
                 name = event,
-                time = fake.date_between('now','2025-03-13') + fake.time(pattern="%H:%M"),
+                time = fake.time(pattern="%H:%M"),
                 location = fake.address()
             )
             events.append(new_event)
@@ -80,7 +80,7 @@ if __name__ == '__main__':
         print('creating event comments')
         comments = []
 
-        for i in range(10):
+        for i in range(50):
             comment = Comment(
                 body = fake.paragraph(),
                 username = rc(usernames)

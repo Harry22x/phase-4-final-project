@@ -2,8 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MessageList from "../components/MessageList";
 import NewMessage from "../components/NewMessage";
+import { Link, useOutletContext,Navigate,useNavigate } from "react-router-dom";
+
+
 function EventPage(){
- 
+  const navigate = useNavigate();
+
+  let [onLogin,user] = useOutletContext();
+  if(!user){
+      navigate('/login')
+  }
     
     const [{ data: event, error, status }, setEvent] = useState({
         data: null,

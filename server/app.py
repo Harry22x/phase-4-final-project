@@ -14,6 +14,9 @@ from models import User, Event, UserEvent, Comment
 
 # Views go here!
 
+
+#session['user_id'] = None
+
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'
@@ -85,18 +88,19 @@ class CheckSession(Resource):
     def get(self):
       
         user_id = session.get('user_id')
-        
-        if not user_id:
-            return {'error': 'Unauthorized'}, 401
-        
-       
-        user = User.query.filter_by(id=user_id).first()
-              
+        print(user_id)
+        if  user_id:
+            user = User.query.filter_by(id=user_id).first()              
      
-        return user.to_dict(), 200
+            print(user)
+            
+        
+        else:
+         return {'error': 'Unauthorized'}, 401
 class Login(Resource):
     def post(self):
         data = request.get_json()
+        
         
        
         user = User.query.filter_by(username=data.get('username')).first()
@@ -110,7 +114,7 @@ class Login(Resource):
             return user.to_dict(), 200
         
        
-        return {'error': 'Invalid username or password'}, 401
+        return {'error': ['Invalid username or password']}, 401
 
 class Logout(Resource):
     pass
@@ -120,7 +124,7 @@ class Logout(Resource):
             return {'error': 'Unauthorized'}, 401
         
        
-        session.pop('user_id', None)
+        session["user_id"]= None
         
        
         return '', 204
