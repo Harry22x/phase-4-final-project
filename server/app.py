@@ -17,6 +17,12 @@ from models import User, Event, UserEvent, Comment
 
 #session['user_id'] = None
 
+with app.app_context():
+    db.create_all()  # This will create tables if they don’t exist
+    print("✅ Database tables created (if not already present)")
+
+
+
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'
