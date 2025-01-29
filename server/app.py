@@ -24,8 +24,11 @@ with app.app_context():
 
 
 
+
 if os.getenv("RUN_SEED") == "true":
-    from seed import seed_data
+    from seed import seed_data  # Import seed_data here
+
+    # Ensure it's in the app context
     with app.app_context():
         seed_data()
         print("✅ Seed data inserted successfully")
