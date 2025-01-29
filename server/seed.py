@@ -5,10 +5,13 @@ from random import randint, choice as rc
 
 # Remote library imports
 from faker import Faker
+from datetime import datetime
 
 # Local imports
 from app import app
 from models import db , User, Event, UserEvent, Comment
+
+
 
 if __name__ == '__main__':
     fake = Faker()
@@ -44,6 +47,10 @@ if __name__ == '__main__':
         db.session.add_all(users)
 
         print("Creating events ....")
+        def random_event_time():
+            random_date = fake.date_between(start_date="today", end_date="+60d")  # Random date within next 2 months
+            random_time = fake.time(pattern="%H:%M")  # Random time
+            return datetime.combine(random_date, datetime.strptime(random_time, "%H:%M").time())
 
         event_names = ['Code & Coffee: Developer Meetup','Paint & Sip: Art with a Twist','Future Forward: Tech Conference 2025',
                        'Rhythms Under the Stars: Outdoor Concert','Eats & Beats: Food Truck Festival','Run for Hope: Charity 5K',
@@ -57,7 +64,7 @@ if __name__ == '__main__':
 
             new_event = Event(
                 name = event,
-                time = fake.time(pattern="%H:%M"),
+                time =  random_event_time(),
                 location = fake.address()
             )
             events.append(new_event)

@@ -29,6 +29,16 @@ class Events(Resource):
             'location':event.location
         } for event in Event.query.all()]
         return make_response(events,200)
+    def post(self):
+        data = request.get_json()
+        new_event = Event(
+            name = data['name'],
+            time = data['time'],
+            location = data['location']
+        )
+        db.session.add(new_event)
+        db.session.commit()
+        return make_response( new_event.to_dict(), 201)
 
 class EventByID(Resource):
     def get(self,id):
@@ -88,11 +98,14 @@ class CheckSession(Resource):
     def get(self):
       
         user_id = session.get('user_id')
-        print(user_id)
+        
         if  user_id:
             user = User.query.filter_by(id=user_id).first()              
-     
-            return user.to_dict(),200
+
+            serialized_user = user.to_dict()
+
+            
+            return serialized_user, 200
             
         
         else:

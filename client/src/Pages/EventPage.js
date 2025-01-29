@@ -8,7 +8,7 @@ import { Link, useOutletContext,Navigate,useNavigate } from "react-router-dom";
 function EventPage(){
   const navigate = useNavigate();
 
-  let [onLogin,user] = useOutletContext();
+  let [onLogin,user,check_session] = useOutletContext();
   const[attending, setAttending] = useState(false)
 
   if(!user){
@@ -52,6 +52,7 @@ function EventPage(){
         })
         .then(getEvent)
         .then(setAttending(true))
+        .then(check_session())
       }
 
       if (status === "pending") return <h1>Loading...</h1>;

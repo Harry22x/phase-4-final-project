@@ -21,9 +21,11 @@ function NavBar({setUser,user}){
            </a>
       </li>
       </Link>
+      <Link to={`/create_event`}>
       <li className="nav-item">
         <a className="nav-link " href="#">Create Event</a>
       </li>
+      </Link>
       {user ? (
             <Link to={`/account`}>
             <li className="nav-item active">

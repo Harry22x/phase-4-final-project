@@ -3,6 +3,7 @@ import Home from "./Pages/Home"
 import EventPage from "./Pages/EventPage"
 import Login from "./Pages/Login"
 import Account from "./Pages/Account"
+import CreateEvent from "./Pages/CreateEvent"
 
 const routes = [
     {
@@ -24,7 +25,11 @@ const routes = [
             {
                 path:'/account',
                 element:<Account/>
-            }
+            },
+            {
+                path:'/create_event',
+                element:<CreateEvent/>
+            },
         ]
     }]
 

@@ -14,7 +14,8 @@ from sqlalchemy.ext.hybrid import hybrid_property
 class User(db.Model,SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-user_events.user','_password_hash')
+    serialize_rules = ('-user_events.user', '-_password_hash', 'user_events.event')
+
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String, unique = True, nullable = False)
     _password_hash = db.Column(db.String, nullable = True) 
