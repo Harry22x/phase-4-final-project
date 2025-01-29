@@ -28,10 +28,11 @@ function Account(){
        <h3>My events:</h3>
        {user.user_events.map(Data =>{
        if(Data.role=='Organizor'){return(
-        <EventCard 
+        <MyEventCard 
         key = {Data.id}
         name={Data.event.name}
         location ={Data.event.location} 
+        time = {Data.event.time}
         id = {Data.event_id}/>
        )
        }

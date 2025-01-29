@@ -45,6 +45,24 @@ class EventByID(Resource):
         event = Event.query.get_or_404(id)
         return make_response(event.to_dict(),200)
 
+    def patch(self,id):
+        event = Event.query.filter_by(id=id).first()
+        content = request.get_json()
+        for attr in content:
+            setattr(event, attr, content[attr])
+        db.session.add(event )
+        db.session.commit()
+        return make_response(event.to_dict(),201)
+
+    def delete(self,id):
+        event = Event.query.filter_by(id=id).first()
+        db.session.delete(event)
+        db.session.commit()
+
+        response = make_response("",204)
+        return response
+
+
 
 
 class Signup(Resource):
