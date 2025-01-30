@@ -172,18 +172,25 @@ class Login(Resource):
         return {'error': ['Invalid username or password']}, 401
 
 class Logout(Resource):
-    pass
     def delete(self):
-       
-        if not session['user_id'] :
-            return {'error': 'Unauthorized'}, 401
+        # Log the full session state and headers
+        logging.info(f"Attempting logout. Current session: {dict(session)}")
+        logging.info(f"Request headers: {dict(request.headers)}")
         
-       
-        session["user_id"]= None
-        session.permanent = True
+        # Verify session exists and contains user_id
+        user_id = session.get('user_id')
+        logging.info(f"Current user_id in session: {user_id}")
         
-       
-        return '', 204
+        # Clear the session
+        try:
+            session.pop('user_id', None)
+            session.modified = True
+            logging.info("Session cleared")
+            logging.info(f"Session after clear: {dict(session)}")
+            return '', 204
+        except Exception as e:
+            logging.error(f"Error during logout: {str(e)}")
+            return {'error': str(e)}, 500
 
 
 class Comments(Resource):
