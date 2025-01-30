@@ -87,7 +87,7 @@ function CreateEvent(){
      />
    </FormField>
    <FormField>
-     <Label htmlFor="date">location</Label>
+     <Label htmlFor="date">Date</Label>
      <Input
        type="datetime-local"
        id="date"

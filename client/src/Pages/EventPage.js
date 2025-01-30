@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import MessageList from "../components/MessageList";
 import NewMessage from "../components/NewMessage";
 import {useOutletContext,useNavigate } from "react-router-dom";
-
+import "../components/LoadingAnimation.css"
 
 function EventPage(){
   const navigate = useNavigate();
@@ -66,7 +66,16 @@ function EventPage(){
       }
     
 
-      if (status === "pending") return <h1>Loading...</h1>;
+      if (status === "pending"){
+        return (
+            <div>
+          
+              <div className="loader">
+            <div className="spinner"></div>
+          </div>
+            </div>
+          );
+    };
       if (status === "rejected") return <h1>Error: {error.error}</h1>;
     return(
         <>
