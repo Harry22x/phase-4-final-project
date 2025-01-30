@@ -28,7 +28,7 @@ function NewMessage({ currentUser, getEvent,eventid }) {
   }
 
   return (
-    <form className="new-message" onSubmit={handleSubmit}>
+    <form style={{height:"50px",}} className ="new-message" onSubmit={handleSubmit}>
       <input
         type="text"
         name="body"

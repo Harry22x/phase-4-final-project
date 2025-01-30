@@ -82,7 +82,9 @@ function EventPage(){
         <main>
         
         <MessageList message={event.comments}/>
+        
         <NewMessage eventid = {event.id} getEvent ={getEvent}/>
+    
         </main>
         </>
     )

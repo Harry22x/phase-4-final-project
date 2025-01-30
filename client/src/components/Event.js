@@ -1,8 +1,20 @@
 import EventCard from "./Eventcard"
-
+import "./LoadingAnimation.css"
 
 function Event({eventData}){
     
+    if (eventData.length === 0) {
+        return (
+          <div>
+        
+            <div className="loader">
+          <div className="spinner"></div>
+        </div>
+          </div>
+        );
+      }
+
+
     return(
         <div>
             <h1 style={{textAlign:'center'}}>Events:</h1>

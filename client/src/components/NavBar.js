@@ -35,11 +35,11 @@ function NavBar({setUser,user}){
 
       ):(null)}
       { user ? (
-        <Button variant="outline" onClick={handleLogoutClick}>
+        <Button variant="outline" onClick={handleLogoutClick} style={{backgroundColor:"#181824",right:"10px", position:'absolute'}}>
           Logout
         </Button>):
         (<Link to ={`/login`}>
-      <li className="nav-item">
+      <li className="nav-item" style={{backgroundColor:"#181824",right:"10px", position:'absolute'}}>
         <a className="nav-link " href="#">Login</a>
       </li>
       </Link>)
