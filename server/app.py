@@ -180,6 +180,7 @@ class Logout(Resource):
         
        
         session["user_id"]= None
+        session.permanent = True
         
        
         return '', 204
