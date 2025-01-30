@@ -173,15 +173,15 @@ class Login(Resource):
 
 class Logout(Resource):
     def delete(self):
-        # Log the full session state and headers
+   
         logging.info(f"Attempting logout. Current session: {dict(session)}")
         logging.info(f"Request headers: {dict(request.headers)}")
         
-        # Verify session exists and contains user_id
+ 
         user_id = session.get('user_id')
         logging.info(f"Current user_id in session: {user_id}")
         
-        # Clear the session
+ 
         try:
             session.pop('user_id', None)
             session.modified = True

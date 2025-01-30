@@ -23,7 +23,7 @@ function SignUpForm({ onLogin }) {
   onSubmit: (values) => {
     setErrors([]);
     setIsLoading(true);
-    console.log(values); 
+  
 
     fetch("https://phase-4-final-project-ttow.onrender.com/signup", {
       method: "POST",
