@@ -35,8 +35,8 @@ api = Api(app)
 # Instantiate CORS
 CORS(app, supports_credentials=True, resources={
     r"/*": {
-        "origins": ["https://aquamarine-pothos-1d4905.netlify.app"],  # Replace with your frontend domain
-        "methods": ["GET", "POST", "PUT", "DELETE"],
+        "origins": ["https://aquamarine-pothos-1d4905.netlify.app","http://localhost:3000"], 
+        "methods": ["GET", "POST", "PATCH", "DELETE"],
         "allow_headers": ["Content-Type"],
         "expose_headers": ["Access-Control-Allow-Credentials"],
         "supports_credentials": True

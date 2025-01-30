@@ -39,21 +39,32 @@ function EventPage(){
       useEffect(getEvent, [id]);
 
 
-      function attendEvent(){
-        fetch('https://phase-4-final-project-ttow.onrender.com/user_events',{
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ event_id: id,
-                                  user_id:user.id,
-                                  role:'Atendee'
-          }),
-        })
-        .then(getEvent)
-        .then(setAttending(true))
-        .then(check_session())
+      async function attendEvent() {
+        try {
+          const response = await fetch('https://phase-4-final-project-ttow.onrender.com/user_events', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ 
+              event_id: id,
+              user_id: user.id,
+              role: 'Atendee'
+            }),
+          });
+    
+          if (response.ok) {
+            // Wait for the event data to be updated
+            await getEvent();
+            setAttending(true);
+            // Update the user session to reflect new changes
+            await check_session();
+          }
+        } catch (error) {
+          console.error("Error attending event:", error);
+        }
       }
+    
 
       if (status === "pending") return <h1>Loading...</h1>;
       if (status === "rejected") return <h1>Error: {error.error}</h1>;
