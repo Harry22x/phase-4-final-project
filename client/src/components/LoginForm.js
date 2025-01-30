@@ -12,8 +12,10 @@ function LoginForm({ onLogin }) {
     setIsLoading(true);
     fetch("https://phase-4-final-project-ttow.onrender.com/login", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        
       },
       body: JSON.stringify({ username, password }),
     }).then((r) => {

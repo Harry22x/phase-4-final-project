@@ -14,6 +14,7 @@ function SignUpForm({ onLogin }) {
     setIsLoading(true);
     fetch("https://phase-4-final-project-ttow.onrender.com/signup", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },

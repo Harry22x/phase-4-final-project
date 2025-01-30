@@ -33,4 +33,12 @@ bcrypt = Bcrypt(app)
 api = Api(app)
 
 # Instantiate CORS
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, resources={
+    r"/*": {
+        "origins": ["https://aquamarine-pothos-1d4905.netlify.app/"],  # Replace with your frontend domain
+        "methods": ["GET", "POST", "PUT", "DELETE"],
+        "allow_headers": ["Content-Type"],
+        "expose_headers": ["Access-Control-Allow-Credentials"],
+        "supports_credentials": True
+    }
+})
