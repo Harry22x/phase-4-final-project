@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Error, Input, FormField, Label } from "../styles";
 import styled from "styled-components";
-import { Link, useOutletContext,Navigate,useNavigate } from "react-router-dom";
+import { useOutletContext,useNavigate } from "react-router-dom";
 function CreateEvent(){
   const navigate = useNavigate();
     const[eventName,setEventName] = useState("")
@@ -17,7 +17,7 @@ function CreateEvent(){
       setIsLoading(true);
       setErrors([]);
   
-      fetch('/events', {
+      fetch('https://phase-4-final-project-ttow.onrender.com/events', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ function CreateEvent(){
       .then(event => {
           setEventData(event); 
           
-          return fetch('/user_events', {
+          return fetch('https://phase-4-final-project-ttow.onrender.com/user_events', {
               method: "POST",
               headers: {
                   "Content-Type": "application/json",

@@ -1,10 +1,9 @@
-import { NavLink, useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { Button } from "../styles";
 
 function NavBar({setUser,user}){
   function handleLogoutClick() {
-    fetch("/logout", { method: "DELETE" }).then((r) => {
+    fetch("https://phase-4-final-project-ttow.onrender.com/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         setUser(null);
       }

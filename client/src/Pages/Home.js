@@ -1,12 +1,12 @@
 import Event from '../components/Event.js';
 import { useState, useEffect } from "react";
-import { Outlet, useOutletContext } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 
 function Home(){
 
     const [events,SetEvents] = useState([])
 function fetchEvents(){
-    fetch('/events')
+    fetch('https://phase-4-final-project-ttow.onrender.com/events')
     .then(r=>r.json())
     .then(data=> SetEvents(data))
 }

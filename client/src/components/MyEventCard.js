@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Error, Input, FormField, Label } from "../styles";
 import styled from "styled-components";
-import { Link, useOutletContext,Navigate,useNavigate } from "react-router-dom";
+import { Link, useOutletContext} from "react-router-dom";
 
 function MyEventCard({name,location,id,time}){
 
@@ -16,7 +16,7 @@ let [onLogin,user,check_session] = useOutletContext();
 
     function handleSubmit(e){
         e.preventDefault();
-        fetch(`/events/${id}`,{
+        fetch(`https://phase-4-final-project-ttow.onrender.com/events/${id}`,{
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,7 +34,7 @@ let [onLogin,user,check_session] = useOutletContext();
 
     function handleDelete(){
 
-        fetch(`/events/${id}`,{
+        fetch(`https://phase-4-final-project-ttow.onrender.com/events/${id}`,{
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

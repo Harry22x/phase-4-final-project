@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useOutletContext,Navigate,useNavigate } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 function NewMessage({ currentUser, getEvent,eventid }) {
   const [body, setBody] = useState("");
 
@@ -9,7 +9,7 @@ function NewMessage({ currentUser, getEvent,eventid }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch("/comments", {
+    fetch("https://phase-4-final-project-ttow.onrender.com/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

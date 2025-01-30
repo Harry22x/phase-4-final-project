@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 function Message({message}){
     const { id, username, body, created_at: createdAt } = message

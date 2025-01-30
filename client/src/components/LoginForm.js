@@ -10,7 +10,7 @@ function LoginForm({ onLogin }) {
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
-    fetch("/login", {
+    fetch("https://phase-4-final-project-ttow.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

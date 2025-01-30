@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Error, Input, FormField, Label, Textarea } from "../styles";
+import { Button, Error, Input, FormField, Label} from "../styles";
 
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -12,7 +12,7 @@ function SignUpForm({ onLogin }) {
     e.preventDefault();
     setErrors([]);
     setIsLoading(true);
-    fetch("/signup", {
+    fetch("https://phase-4-final-project-ttow.onrender.com/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

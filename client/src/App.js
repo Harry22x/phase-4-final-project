@@ -7,7 +7,10 @@ function App() {
 
 
   function check_session(){
-    fetch("/check_session").then((r) => {
+    fetch("https://phase-4-final-project-ttow.onrender.com/check_session", {
+      method: "GET",
+      credentials: "include" 
+  }).then((r) => {
       if (r.ok) {
         r.json().then((user) => setUser(user));
       }

@@ -6,6 +6,7 @@
 from flask import request,make_response, session
 from flask_restful import Resource
 import os
+import logging
 
 # Local imports
 from config import app, db, api
@@ -17,6 +18,8 @@ from models import User, Event, UserEvent, Comment
 
 
 #session['user_id'] = None
+logging.basicConfig(level=logging.DEBUG)
+
 
 with app.app_context():
     db.create_all()  # This will create tables if they don’t exist
@@ -134,6 +137,7 @@ class CheckSession(Resource):
     def get(self):
       
         user_id = session.get('user_id')
+        logging.debug(f"Session user_id: {user_id}")
         
         if  user_id:
             user = User.query.filter_by(id=user_id).first()              

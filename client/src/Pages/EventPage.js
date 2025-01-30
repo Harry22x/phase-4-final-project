@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MessageList from "../components/MessageList";
 import NewMessage from "../components/NewMessage";
-import { Link, useOutletContext,Navigate,useNavigate } from "react-router-dom";
+import {useOutletContext,useNavigate } from "react-router-dom";
 
 
 function EventPage(){
@@ -23,7 +23,7 @@ function EventPage(){
       const { id } = useParams();
     
       function getEvent(){
-        fetch(`/events/${id}`).then((r) => {
+        fetch(`https://phase-4-final-project-ttow.onrender.com/events/${id}`).then((r) => {
           if (r.ok) {
             r.json().then((event) =>
                 setEvent({ data: event, error: null, status: "resolved" })
@@ -40,7 +40,7 @@ function EventPage(){
 
 
       function attendEvent(){
-        fetch('/user_events',{
+        fetch('https://phase-4-final-project-ttow.onrender.com/user_events',{
           method: "POST",
           headers: {
             "Content-Type": "application/json",
