@@ -54,10 +54,10 @@ function EventPage(){
           });
     
           if (response.ok) {
-            // Wait for the event data to be updated
+           
             await getEvent();
             setAttending(true);
-            // Update the user session to reflect new changes
+           
             await check_session();
           }
         } catch (error) {

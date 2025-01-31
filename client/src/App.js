@@ -16,7 +16,7 @@ function App() {
       if (response.ok) {
         const userData = await response.json();
         setUser(userData);
-        return userData; // Return the user data for components that need it immediately
+        return userData; 
       }
     } catch (error) {
       console.error("Error checking session:", error);

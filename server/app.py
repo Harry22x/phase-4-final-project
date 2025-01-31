@@ -22,16 +22,16 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 with app.app_context():
-    db.create_all()  # This will create tables if they don’t exist
+    db.create_all() 
     print("✅ Database tables created (if not already present)")
 
 
 
 
 if os.getenv("RUN_SEED") == "true":
-    from seed import seed_data  # Import seed_data here
+    from seed import seed_data  
 
-    # Ensure it's in the app context
+  
     with app.app_context():
         seed_data()
         print("✅ Seed data inserted successfully.")
